@@ -431,9 +431,215 @@
     .meta-bar { font-size: 11px; letter-spacing: 2px; }
     .flavor-tag { margin-left: 0; }
   }
+
+  /* ===== ハンバーガーメニュー ===== */
+  /* ボタン本体: 画面左上に固定。エナジー系の斜め+厚み影で統一感 */
+  .menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 56px;
+    height: 56px;
+    background: var(--white);            /* 反転後は黒 */
+    border: 3px solid var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transform: skewX(-6deg);
+    box-shadow: 5px 5px 0 var(--orange);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .menu-btn:hover {
+    box-shadow: 5px 5px 0 var(--green);
+    transform: skewX(-6deg) translateY(-2px);
+  }
+  .menu-btn .bar {
+    width: 26px;
+    height: 3px;
+    background: var(--orange);           /* 棒はオレンジ */
+    transition: transform 0.3s, opacity 0.2s;
+    transform-origin: center;
+  }
+  /* 開いている時: 上下のバーをXに、真ん中は消す */
+  .menu-btn.open .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .menu-btn.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-btn.open .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* メニューパネル: 左からスライドイン */
+  .menu-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    max-width: 85vw;
+    height: 100vh;
+    background: var(--white);            /* 反転後の黒 = メニューの背景は黒 */
+    color: var(--black);                 /* メニュー内の文字色 = 反転後の白系 */
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 100px 24px 30px;
+    overflow-y: auto;
+    box-shadow: 6px 0 0 var(--orange), 12px 0 0 var(--green);
+  }
+  .menu-panel.open {
+    transform: translateX(0);
+  }
+  /* メニュー内のラベル */
+  .menu-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--orange);
+    margin: 20px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--orange);
+  }
+  .menu-label:first-child { margin-top: 0; }
+  /* ジャンプリンク */
+  .menu-jump {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: transparent;
+    border: 2px solid var(--black);      /* 白系の枠 */
+    color: var(--black);
+    text-decoration: none;
+    font-family: 'Oswald', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transform: skewX(-4deg);
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+    width: 100%;
+    text-align: left;
+  }
+  .menu-jump:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--white);                 /* 反転後の黒 = ホバー時の文字色 */
+    transform: skewX(-4deg) translateX(4px);
+  }
+  .menu-jump .menu-jump-no {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    color: var(--orange);
+    letter-spacing: 2px;
+    transition: color 0.15s;
+  }
+  .menu-jump:hover .menu-jump-no { color: var(--white); }
+  .menu-jump .menu-jump-arrow {
+    margin-left: auto;
+    color: var(--gray);
+    transition: transform 0.15s, color 0.15s;
+  }
+  .menu-jump:hover .menu-jump-arrow {
+    color: var(--white);
+    transform: translateX(3px);
+  }
+  /* カテゴリ別のアクセント色 */
+  .menu-jump[data-target="learning"]:hover { background: var(--green); border-color: var(--green); }
+  .menu-jump[data-target="shortcut"]:hover { background: var(--green-acid); border-color: var(--green-acid); color: var(--white); }
+
+  /* メニューフッター */
+  .menu-foot {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--gray);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+
+  /* 背景オーバーレイ: メニュー開時の暗幕 */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* メニュー開時はbodyスクロール停止 */
+  body.menu-open { overflow: hidden; }
+
+  /* スクロール時の余白(固定ヘッダー対策で各セクションへジャンプした際の上余白) */
+  .flavor { scroll-margin-top: 30px; }
 </style>
 </head>
 <body>
+
+<!-- ===== ハンバーガーメニュー ===== -->
+<button class="menu-btn" id="menuBtn" aria-label="メニューを開く">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="menu-panel" id="menuPanel" aria-label="ナビゲーション">
+  <div class="menu-label">// QUICK JUMP</div>
+  <a class="menu-jump" data-target="master" href="#master">
+    <span class="menu-jump-no">01</span>
+    <span>MASTER</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="learning" href="#learning">
+    <span class="menu-jump-no">02</span>
+    <span>LEARNING</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="tool" href="#tool">
+    <span class="menu-jump-no">03</span>
+    <span>TOOL</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="shortcut" href="#shortcut">
+    <span class="menu-jump-no">04</span>
+    <span>SHORTCUT</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+
+  <div class="menu-label" style="margin-top: 32px;">// ACTIONS</div>
+  <button class="menu-jump" id="actionTop" type="button">
+    <span class="menu-jump-no">↑</span>
+    <span>BACK TO TOP</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </button>
+  <button class="menu-jump" id="actionFocusSearch" type="button">
+    <span class="menu-jump-no">⌕</span>
+    <span>FOCUS SEARCH</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </button>
+
+  <div class="menu-foot">
+    SHIZUOKA PORTAL // SP-W4-2026<br>
+    KEYBOARD: ESC TO CLOSE<br>
+    BUILT FOR WEST JAPAN OPS
+  </div>
+</aside>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
@@ -478,7 +684,7 @@
   </div>
 
   <!-- MASTER (オレンジ) -->
-  <section class="flavor" data-color="orange">
+  <section id="master" class="flavor" data-color="orange">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 01</span>
@@ -515,7 +721,7 @@
   </section>
 
   <!-- LEARNING (グリーン) -->
-  <section class="flavor" data-color="green">
+  <section id="learning" class="flavor" data-color="green">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 02</span>
@@ -552,7 +758,7 @@
   </section>
 
   <!-- TOOL (ホワイト) -->
-  <section class="flavor" data-color="white">
+  <section id="tool" class="flavor" data-color="white">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 03</span>
@@ -573,7 +779,7 @@
   </section>
 
   <!-- SHORTCUT (アシッドグリーン) -->
-  <section class="flavor" data-color="acid">
+  <section id="shortcut" class="flavor" data-color="acid">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 04</span>
@@ -648,16 +854,65 @@
   }
   searchInput.addEventListener('input', e => applyFilter(e.target.value.toLowerCase().trim()));
 
-  // Esc/Ctrl+Kショートカット
+  // ===== ハンバーガーメニュー開閉 =====
+  const menuBtn = document.getElementById('menuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  const menuOverlay = document.getElementById('menuOverlay');
+
+  function openMenu() {
+    menuBtn.classList.add('open');
+    menuPanel.classList.add('open');
+    menuOverlay.classList.add('open');
+    document.body.classList.add('menu-open');
+    menuBtn.setAttribute('aria-label', 'メニューを閉じる');
+  }
+  function closeMenu() {
+    menuBtn.classList.remove('open');
+    menuPanel.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuBtn.setAttribute('aria-label', 'メニューを開く');
+  }
+  function toggleMenu() {
+    menuPanel.classList.contains('open') ? closeMenu() : openMenu();
+  }
+
+  menuBtn.addEventListener('click', toggleMenu);
+  menuOverlay.addEventListener('click', closeMenu);
+
+  // ジャンプリンクをクリックしたら自動でメニューを閉じる
+  document.querySelectorAll('.menu-jump').forEach(jump => {
+    jump.addEventListener('click', () => {
+      // <a>はアンカージャンプ後に閉じる、<button>はアクション実行
+      setTimeout(closeMenu, 150);
+    });
+  });
+
+  // ACTIONS: トップに戻る、検索フォーカス
+  document.getElementById('actionTop').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('actionFocusSearch').addEventListener('click', () => {
+    // メニューが閉じきってから検索バーへフォーカス
+    setTimeout(() => searchInput.focus(), 350);
+  });
+
+  // ===== キーボードショートカット(統合) =====
   document.addEventListener('keydown', e => {
+    // Ctrl+K / ⌘+K で検索フォーカス
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       searchInput.focus();
     }
+    // Escはメニューが開いていれば閉じる、そうでなければ検索クリア
     if (e.key === 'Escape') {
-      searchInput.value = '';
-      applyFilter('');
-      searchInput.blur();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        searchInput.value = '';
+        applyFilter('');
+        searchInput.blur();
+      }
     }
   });
 </script>
