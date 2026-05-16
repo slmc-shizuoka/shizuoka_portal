@@ -36,8 +36,10 @@
     --orange: #ff6a00;
     --orange-hot: #ff8a1f;
     --orange-burnt: #cc4400;  /* Labor用: Masterより深く渋いオレンジで差別化 */
+    --orange-fas: #ff4d00;    /* FAS用: 機会損失=警告色として赤寄りの強オレンジ */
     --green: #00b85a;       /* 白背景で読みやすいよう少し落ち着いた緑に */
     --green-acid: #6ed500;  /* アシッドも視認性確保で彩度を調整 */
+    --green-calendar: #008c5e; /* Calendar用: Learningより深い緑、安定感を出す */
     --white: #0a0a0a;       /* 旧:白 → 文字/枠線として使う黒 */
     --gray: #666;           /* 白背景でコントラスト確保 */
   }
@@ -282,6 +284,8 @@
   .flavor[data-color="white"] .flavor-header::before { background: var(--white); }
   .flavor[data-color="acid"] .flavor-header::before { background: var(--green-acid); }
   .flavor[data-color="burnt"] .flavor-header::before { background: var(--orange-burnt); }
+  .flavor[data-color="fas"] .flavor-header::before { background: var(--orange-fas); }
+  .flavor[data-color="calendar"] .flavor-header::before { background: var(--green-calendar); }
 
   .flavor-header-inner {
     transform: skewX(4deg);
@@ -309,6 +313,8 @@
   .flavor[data-color="orange"] .flavor-name .hl { color: var(--orange); }
   .flavor[data-color="acid"] .flavor-name .hl { color: var(--green-acid); }
   .flavor[data-color="burnt"] .flavor-name .hl { color: var(--orange-burnt); }
+  .flavor[data-color="fas"] .flavor-name .hl { color: var(--orange-fas); }
+  .flavor[data-color="calendar"] .flavor-name .hl { color: var(--green-calendar); }
   .flavor-tag {
     margin-left: auto;
     font-family: 'Bebas Neue', sans-serif;
@@ -352,6 +358,8 @@
   .flavor[data-color="white"] .card::before { background: var(--white); }
   .flavor[data-color="acid"] .card::before { background: var(--green-acid); }
   .flavor[data-color="burnt"] .card::before { background: var(--orange-burnt); }
+  .flavor[data-color="fas"] .card::before { background: var(--orange-fas); }
+  .flavor[data-color="calendar"] .card::before { background: var(--green-calendar); }
   /* 右上のスラッシュ装飾 */
   .card::after {
     content: '';
@@ -367,6 +375,8 @@
   .flavor[data-color="white"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--white) 50%); }
   .flavor[data-color="acid"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-acid) 50%); }
   .flavor[data-color="burnt"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-burnt) 50%); }
+  .flavor[data-color="fas"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-fas) 50%); }
+  .flavor[data-color="calendar"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-calendar) 50%); }
 
   .card:hover {
     transform: translateY(-4px) skewX(-1deg);
@@ -375,6 +385,8 @@
   .flavor[data-color="green"] .card:hover { border-color: var(--green); }
   .flavor[data-color="acid"] .card:hover  { border-color: var(--green-acid); }
   .flavor[data-color="burnt"] .card:hover { border-color: var(--orange-burnt); }
+  .flavor[data-color="fas"] .card:hover { border-color: var(--orange-fas); }
+  .flavor[data-color="calendar"] .card:hover { border-color: var(--green-calendar); }
   .card:hover::before { width: 14px; }
   .card:hover::after  { transform: scale(1.3); }
 
@@ -416,6 +428,8 @@
   .flavor[data-color="green"] .card-go { color: var(--green); }
   .flavor[data-color="acid"] .card-go  { color: var(--green-acid); }
   .flavor[data-color="burnt"] .card-go { color: var(--orange-burnt); }
+  .flavor[data-color="fas"] .card-go { color: var(--orange-fas); }
+  .flavor[data-color="calendar"] .card-go { color: var(--green-calendar); }
   .flavor[data-color="white"] .card-go { color: var(--white); }
   .card-go .arrow {
     font-family: 'Anton', sans-serif;
@@ -579,6 +593,8 @@
   /* カテゴリ別のアクセント色 */
   .menu-jump[data-target="learning"]:hover { background: var(--green); border-color: var(--green); }
   .menu-jump[data-target="labor"]:hover { background: var(--orange-burnt); border-color: var(--orange-burnt); }
+  .menu-jump[data-target="fas"]:hover { background: var(--orange-fas); border-color: var(--orange-fas); }
+  .menu-jump[data-target="calendar"]:hover { background: var(--green-calendar); border-color: var(--green-calendar); }
   .menu-jump[data-target="shortcut"]:hover { background: var(--green-acid); border-color: var(--green-acid); color: var(--white); }
 
   /* メニューフッター */
@@ -643,14 +659,24 @@
     <span>LABOR</span>
     <span class="menu-jump-arrow">▸▸</span>
   </a>
-  <a class="menu-jump" data-target="tool" href="#tool">
+  <a class="menu-jump" data-target="fas" href="#fas">
     <span class="menu-jump-no">04</span>
-    <span>TOOL</span>
+    <span>FAS</span>
     <span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="shortcut" href="#shortcut">
     <span class="menu-jump-no">05</span>
     <span>SHORTCUT</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="calendar" href="#calendar">
+    <span class="menu-jump-no">06</span>
+    <span>CALENDAR</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="tool" href="#tool">
+    <span class="menu-jump-no">07</span>
+    <span>TOOL</span>
     <span class="menu-jump-arrow">▸▸</span>
   </a>
 
@@ -692,8 +718,8 @@
     </div>
 
     <div class="stickers">
-      <div class="sticker orange"><span>★ 19 LINKS LOADED</span></div>
-      <div class="sticker green"><span>⚡ 5 CATEGORIES</span></div>
+      <div class="sticker orange"><span>★ 21 LINKS LOADED</span></div>
+      <div class="sticker green"><span>⚡ 7 CATEGORIES</span></div>
       <div class="sticker white"><span>EXTREME FOCUS — 0 SUGAR</span></div>
       <div class="sticker orange"><span>FOR OPERATORS ONLY</span></div>
     </div>
@@ -826,37 +852,29 @@
     </div>
   </section>
 
-  <!-- TOOL (ホワイト) -->
-  <section id="tool" class="flavor" data-color="white">
+  <!-- FAS (オレンジレッド) -->
+  <section id="fas" class="flavor" data-color="fas">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 04</span>
-        <span class="flavor-name">TO<span class="hl">OL</span></span>
-        <span class="flavor-tag">3 SHOTS</span>
+        <span class="flavor-name">F<span class="hl">AS</span></span>
+        <span class="flavor-tag">2 SHOTS</span>
       </div>
     </div>
     <div class="grid">
-      <a class="card" href="https://manager.linestep.net/line/reserve/salon" target="_blank" rel="noopener">
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1yepzlfQn24PBVvRDQyIrRE5RN9fRhKZc/edit?usp=drive_link&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
-        <div class="card-title">LSTEP</div>
+        <div class="card-title">FAS機会損失相談 (三島用)</div>
         <div class="card-meta">
-          <span class="card-domain">manager.linestep.net</span>
+          <span class="card-domain">docs.google.com/sheets</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://presence-app-eight.vercel.app/dashboard/board" target="_blank" rel="noopener">
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1ChQIBW0PrB7fmEMbKpX8TFhSsn4sHHBE/edit?usp=sharing&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
-        <div class="card-title">Presence</div>
+        <div class="card-title">FAS機会損失相談 (富士用)</div>
         <div class="card-meta">
-          <span class="card-domain">presence-app-eight.vercel.app</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://link.ozzio.info/" target="_blank" rel="noopener">
-        <div class="card-no">// 003</div>
-        <div class="card-title">エンジニアツール</div>
-        <div class="card-meta">
-          <span class="card-domain">link.ozzio.info</span>
+          <span class="card-domain">docs.google.com/sheets</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
@@ -869,7 +887,7 @@
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 05</span>
         <span class="flavor-name">SHORT<span class="hl">CUT</span></span>
-        <span class="flavor-tag">7 SHOTS</span>
+        <span class="flavor-tag">3 SHOTS</span>
       </div>
     </div>
     <div class="grid">
@@ -881,24 +899,37 @@
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://docs.google.com/spreadsheets/d/1yepzlfQn24PBVvRDQyIrRE5RN9fRhKZc/edit?usp=drive_link&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
+      <a class="card" href="https://meet.google.com/vgq-xrnv-hkw" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
-        <div class="card-title">FAS機会損失相談 (三島用)</div>
+        <div class="card-title">GoogleMeet (静岡Branch専用)</div>
         <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
+          <span class="card-domain">meet.google.com</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://docs.google.com/spreadsheets/d/1ChQIBW0PrB7fmEMbKpX8TFhSsn4sHHBE/edit?usp=sharing&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
+      <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLScWWxWfHAjY-hJI6oX_OOUMM9TM0FDnjSW84IwLPa0F3i4yJg/viewform" target="_blank" rel="noopener">
         <div class="card-no">// 003</div>
-        <div class="card-title">FAS機会損失相談 (富士用)</div>
+        <div class="card-title">AI自主監査</div>
         <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
+          <span class="card-domain">docs.google.com/forms</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- CALENDAR (ディープグリーン) -->
+  <section id="calendar" class="flavor" data-color="calendar">
+    <div class="flavor-header">
+      <div class="flavor-header-inner">
+        <span class="flavor-sku">FLAVOR // 06</span>
+        <span class="flavor-name">CALEN<span class="hl">DAR</span></span>
+        <span class="flavor-tag">3 SHOTS</span>
+      </div>
+    </div>
+    <div class="grid">
       <a class="card" href="https://slmc-mishima.studio.site/#calendar" target="_blank" rel="noopener">
-        <div class="card-no">// 004</div>
+        <div class="card-no">// 001</div>
         <div class="card-title">イベントカレンダー (三島用)</div>
         <div class="card-meta">
           <span class="card-domain">slmc-mishima.studio.site</span>
@@ -906,26 +937,63 @@
         </div>
       </a>
       <a class="card" href="https://smartlife-fuji.studio.site/#calendar" target="_blank" rel="noopener">
-        <div class="card-no">// 005</div>
+        <div class="card-no">// 002</div>
         <div class="card-title">イベントカレンダー (富士用)</div>
         <div class="card-meta">
           <span class="card-domain">smartlife-fuji.studio.site</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLScWWxWfHAjY-hJI6oX_OOUMM9TM0FDnjSW84IwLPa0F3i4yJg/viewform" target="_blank" rel="noopener">
-        <div class="card-no">// 006</div>
-        <div class="card-title">AI自主監査</div>
+      <a class="card" href="https://manager.linestep.net/line/reserve/salon" target="_blank" rel="noopener">
+        <div class="card-no">// 003</div>
+        <div class="card-title">LSTEP</div>
         <div class="card-meta">
-          <span class="card-domain">docs.google.com/forms</span>
+          <span class="card-domain">manager.linestep.net</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://drive.google.com/drive/folders/1yRgThFIGUtISinx3ThPIyNr8-8NqtPd5?usp=drive_link" target="_blank" rel="noopener">
-        <div class="card-no">// 007</div>
-        <div class="card-title">シフト (富士用)</div>
+    </div>
+  </section>
+
+  <!-- TOOL (ホワイト) -->
+  <section id="tool" class="flavor" data-color="white">
+    <div class="flavor-header">
+      <div class="flavor-header-inner">
+        <span class="flavor-sku">FLAVOR // 07</span>
+        <span class="flavor-name">TO<span class="hl">OL</span></span>
+        <span class="flavor-tag">4 SHOTS</span>
+      </div>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://presence-app-eight.vercel.app/dashboard/board" target="_blank" rel="noopener">
+        <div class="card-no">// 001</div>
+        <div class="card-title">Presence</div>
         <div class="card-meta">
-          <span class="card-domain">drive.google.com</span>
+          <span class="card-domain">presence-app-eight.vercel.app</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://sites.google.com/pcdepot.jp/gem" target="_blank" rel="noopener">
+        <div class="card-no">// 002</div>
+        <div class="card-title">Gem一覧</div>
+        <div class="card-meta">
+          <span class="card-domain">sites.google.com/pcdepot.jp</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://link.ozzio.info/" target="_blank" rel="noopener">
+        <div class="card-no">// 003</div>
+        <div class="card-title">エンジニアツール</div>
+        <div class="card-meta">
+          <span class="card-domain">link.ozzio.info</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://compatibility-five.vercel.app/" target="_blank" rel="noopener">
+        <div class="card-no">// 004</div>
+        <div class="card-title">互換性調査ツール</div>
+        <div class="card-meta">
+          <span class="card-domain">compatibility-five.vercel.app</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
