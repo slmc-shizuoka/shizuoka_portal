@@ -10,8 +10,9 @@ const CACHE_NAME = `shizuoka-portal-${CACHE_VERSION}`;
 const PRECACHE_URLS = [
   '/Shizuoka_Portal.html',
   '/manifest.json',
-  '/icons/icon-192.svg',
-  '/icons/icon-512.svg',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/icons/apple-touch-icon.png',
 ];
 
 // ===== インストール =====
