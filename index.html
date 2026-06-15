@@ -39,6 +39,7 @@
     --green: #00b85a;       /* 白背景で読みやすいよう少し落ち着いた緑に */
     --green-acid: #6ed500;  /* アシッドも視認性確保で彩度を調整 */
     --green-calendar: #008c5e; /* Calendar用: Learningより深い緑、安定感を出す */
+    --blue-steel: #1a6fa8;    /* BASE PORTAL用: 拠点ポータルを表す落ち着いた鋼青 */
     --white: #0a0a0a;       /* 旧:白 → 文字/枠線として使う黒 */
     --gray: #666;           /* 白背景でコントラスト確保 */
   }
@@ -285,6 +286,7 @@
   .flavor[data-color="burnt"] .flavor-header::before { background: var(--orange-burnt); }
   .flavor[data-color="fas"] .flavor-header::before { background: var(--orange-fas); }
   .flavor[data-color="calendar"] .flavor-header::before { background: var(--green-calendar); }
+  .flavor[data-color="base-portal"] .flavor-header::before { background: var(--blue-steel); }
 
   .flavor-header-inner {
     transform: skewX(4deg);
@@ -314,6 +316,7 @@
   .flavor[data-color="burnt"] .flavor-name .hl { color: var(--orange-burnt); }
   .flavor[data-color="fas"] .flavor-name .hl { color: var(--orange-fas); }
   .flavor[data-color="calendar"] .flavor-name .hl { color: var(--green-calendar); }
+  .flavor[data-color="base-portal"] .flavor-name .hl { color: var(--blue-steel); }
   .flavor-tag {
     margin-left: auto;
     font-family: 'Bebas Neue', sans-serif;
@@ -359,6 +362,7 @@
   .flavor[data-color="burnt"] .card::before { background: var(--orange-burnt); }
   .flavor[data-color="fas"] .card::before { background: var(--orange-fas); }
   .flavor[data-color="calendar"] .card::before { background: var(--green-calendar); }
+  .flavor[data-color="base-portal"] .card::before { background: var(--blue-steel); }
   /* 右上のスラッシュ装飾 */
   .card::after {
     content: '';
@@ -376,6 +380,7 @@
   .flavor[data-color="burnt"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-burnt) 50%); }
   .flavor[data-color="fas"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-fas) 50%); }
   .flavor[data-color="calendar"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-calendar) 50%); }
+  .flavor[data-color="base-portal"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--blue-steel) 50%); }
 
   .card:hover {
     transform: translateY(-4px) skewX(-1deg);
@@ -386,6 +391,7 @@
   .flavor[data-color="burnt"] .card:hover { border-color: var(--orange-burnt); }
   .flavor[data-color="fas"] .card:hover { border-color: var(--orange-fas); }
   .flavor[data-color="calendar"] .card:hover { border-color: var(--green-calendar); }
+  .flavor[data-color="base-portal"] .card:hover { border-color: var(--blue-steel); }
   .card:hover::before { width: 14px; }
   .card:hover::after  { transform: scale(1.3); }
 
@@ -429,6 +435,7 @@
   .flavor[data-color="burnt"] .card-go { color: var(--orange-burnt); }
   .flavor[data-color="fas"] .card-go { color: var(--orange-fas); }
   .flavor[data-color="calendar"] .card-go { color: var(--green-calendar); }
+  .flavor[data-color="base-portal"] .card-go { color: var(--blue-steel); }
   .flavor[data-color="white"] .card-go { color: var(--white); }
   .card-go .arrow {
     font-family: 'Anton', sans-serif;
@@ -594,6 +601,7 @@
   .menu-jump[data-target="labor"]:hover { background: var(--orange-burnt); border-color: var(--orange-burnt); }
   .menu-jump[data-target="fas"]:hover { background: var(--orange-fas); border-color: var(--orange-fas); }
   .menu-jump[data-target="calendar"]:hover { background: var(--green-calendar); border-color: var(--green-calendar); }
+  .menu-jump[data-target="base-portal"]:hover { background: var(--blue-steel); border-color: var(--blue-steel); }
   .menu-jump[data-target="shortcut"]:hover { background: var(--green-acid); border-color: var(--green-acid); color: var(--white); }
 
   /* メニューフッター */
@@ -678,6 +686,11 @@
     <span>TOOL</span>
     <span class="menu-jump-arrow">▸▸</span>
   </a>
+  <a class="menu-jump" data-target="base-portal" href="#base-portal">
+    <span class="menu-jump-no">08</span>
+    <span>BASE PORTAL</span>
+    <span class="menu-jump-arrow">▸▸</span>
+  </a>
 
   <div class="menu-label" style="margin-top: 32px;">// ACTIONS</div>
   <button class="menu-jump" id="actionTop" type="button">
@@ -717,8 +730,8 @@
     </div>
 
     <div class="stickers">
-      <div class="sticker orange"><span>★ 22 LINKS LOADED</span></div>
-      <div class="sticker green"><span>⚡ 7 CATEGORIES</span></div>
+      <div class="sticker orange"><span>★ 24 LINKS LOADED</span></div>
+      <div class="sticker green"><span>⚡ 8 CATEGORIES</span></div>
       <div class="sticker white"><span>EXTREME FOCUS — 0 SUGAR</span></div>
       <div class="sticker orange"><span>FOR OPERATORS ONLY</span></div>
     </div>
@@ -857,7 +870,7 @@
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 04</span>
         <span class="flavor-name">F<span class="hl">AS</span></span>
-        <span class="flavor-tag">5 SHOTS</span>
+        <span class="flavor-tag">6 SHOTS</span>
       </div>
     </div>
     <div class="grid">
@@ -898,6 +911,14 @@
         <div class="card-title">FAS未来生産価値</div>
         <div class="card-meta">
           <span class="card-domain">docs.google.com/sheets</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://fuji-base-ledger.pages.dev/" target="_blank" rel="noopener">
+        <div class="card-no">// 006</div>
+        <div class="card-title">静岡地域会員台帳</div>
+        <div class="card-meta">
+          <span class="card-domain">fuji-base-ledger.pages.dev</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
@@ -1001,6 +1022,27 @@
         <div class="card-title">STORE/PICKER</div>
         <div class="card-meta">
           <span class="card-domain">pickup.serizawamo.workers.dev</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BASE PORTAL (スチールブルー) -->
+  <section id="base-portal" class="flavor" data-color="base-portal">
+    <div class="flavor-header">
+      <div class="flavor-header-inner">
+        <span class="flavor-sku">FLAVOR // 08</span>
+        <span class="flavor-name">BASE <span class="hl">PORTAL</span></span>
+        <span class="flavor-tag">1 SHOT</span>
+      </div>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://fuji-portal.pages.dev/" target="_blank" rel="noopener">
+        <div class="card-no">// 001</div>
+        <div class="card-title">FUJI PORTAL</div>
+        <div class="card-meta">
+          <span class="card-domain">fuji-portal.pages.dev</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
