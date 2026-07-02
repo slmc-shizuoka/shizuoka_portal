@@ -5,15 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHIZUOKA PORTAL // UNLEASH THE FLOW</title>
 
+<!-- ===== ショートカット/ホーム画面アイコン =====
+     SVGをdata URIで埋め込み、外部画像ファイル不要で単一HTMLで完結させる -->
+<!-- ブラウザタブ用favicon(SVG): モダンブラウザはSVGのfaviconに対応 -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230a0a0a'/><polygon points='0,68 100,40 100,52 0,80' fill='%23ff6a00'/><polygon points='0,82 100,55 100,62 0,88' fill='%2300b85a'/><path d='M58 22 L34 52 L48 52 L40 78 L66 46 L52 46 Z' fill='%23ff6a00' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/></svg>">
 
+<!-- iOS Safari: ホーム画面追加時のアイコン -->
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
+<!-- iOS Safari: ホーム画面追加時にステータスバーをサイトに合わせる -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Shizuoka Portal">
 
+<!-- Androidなど: PWAマニフェスト(外部ファイル参照) -->
 <link rel="manifest" href="/manifest.json">
+<!-- アドレスバーのテーマカラー(Chrome/Edge等) -->
 <meta name="theme-color" content="#ff6a00">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -633,6 +640,7 @@
 </head>
 <body>
 
+<!-- ===== ハンバーガーメニュー ===== -->
 <button class="menu-btn" id="menuBtn" aria-label="メニューを開く">
   <span class="bar"></span>
   <span class="bar"></span>
@@ -703,6 +711,7 @@
   </div>
 </aside>
 
+<!-- ===== HERO ===== -->
 <section class="hero">
   <div class="hero-content">
 
@@ -721,7 +730,7 @@
     </div>
 
     <div class="stickers">
-      <div class="sticker orange"><span>★ 25 LINKS LOADED</span></div>
+      <div class="sticker orange"><span>★ 26 LINKS LOADED</span></div>
       <div class="sticker green"><span>⚡ 8 CATEGORIES</span></div>
       <div class="sticker white"><span>EXTREME FOCUS — 0 SUGAR</span></div>
       <div class="sticker orange"><span>FOR OPERATORS ONLY</span></div>
@@ -730,8 +739,10 @@
   </div>
 </section>
 
+<!-- ===== MAIN ===== -->
 <div class="container">
 
+  <!-- 検索 -->
   <div class="search-wrap">
     <div class="search-label">// SEARCH ENGINE — TYPE TO FILTER</div>
     <div class="search-box">
@@ -742,6 +753,7 @@
     </div>
   </div>
 
+  <!-- MASTER (オレンジ) -->
   <section id="master" class="flavor" data-color="orange">
     <div class="flavor-header">
       <div class="flavor-header-inner">
@@ -778,6 +790,7 @@
     </div>
   </section>
 
+  <!-- LEARNING (グリーン) -->
   <section id="learning" class="flavor" data-color="green">
     <div class="flavor-header">
       <div class="flavor-header-inner">
@@ -814,6 +827,7 @@
     </div>
   </section>
 
+  <!-- LABOR (バーントオレンジ) -->
   <section id="labor" class="flavor" data-color="burnt">
     <div class="flavor-header">
       <div class="flavor-header-inner">
@@ -850,12 +864,13 @@
     </div>
   </section>
 
+  <!-- FAS (オレンジレッド) -->
   <section id="fas" class="flavor" data-color="fas">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 04</span>
         <span class="flavor-name">F<span class="hl">AS</span></span>
-        <span class="flavor-tag">6 SHOTS</span>
+        <span class="flavor-tag">5 SHOTS</span>
       </div>
     </div>
     <div class="grid">
@@ -891,16 +906,8 @@
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://docs.google.com/spreadsheets/d/14oL8vOGIudo_L_8UesPZa_1Pj0Lg75ec/edit?gid=867867742#gid=867867742" target="_blank" rel="noopener">
-        <div class="card-no">// 005</div>
-        <div class="card-title">FAS未来生産価値</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
       <a class="card" href="https://fuji-base-ledger.pages.dev/" target="_blank" rel="noopener">
-        <div class="card-no">// 006</div>
+        <div class="card-no">// 005</div>
         <div class="card-title">静岡地域会員台帳</div>
         <div class="card-meta">
           <span class="card-domain">fuji-base-ledger.pages.dev</span>
@@ -910,12 +917,13 @@
     </div>
   </section>
 
+  <!-- SHORTCUT (アシッドグリーン) -->
   <section id="shortcut" class="flavor" data-color="acid">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 05</span>
         <span class="flavor-name">SHORT<span class="hl">CUT</span></span>
-        <span class="flavor-tag">4 SHOTS</span>
+        <span class="flavor-tag">5 SHOTS</span>
       </div>
     </div>
     <div class="grid">
@@ -927,8 +935,16 @@
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
-      <a class="card" href="https://meet.google.com/vgq-xrnv-hkw" target="_blank" rel="noopener">
+      <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSenBW-onLxEWRkDIb5AskY44HSc3QDAUAyKFRgbit3w_W2Oig/viewform?usp=header" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
+        <div class="card-title">会議参加申請</div>
+        <div class="card-meta">
+          <span class="card-domain">docs.google.com/forms</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://meet.google.com/vgq-xrnv-hkw" target="_blank" rel="noopener">
+        <div class="card-no">// 003</div>
         <div class="card-title">GoogleMeet (静岡Branch専用)</div>
         <div class="card-meta">
           <span class="card-domain">meet.google.com</span>
@@ -936,7 +952,7 @@
         </div>
       </a>
       <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLScWWxWfHAjY-hJI6oX_OOUMM9TM0FDnjSW84IwLPa0F3i4yJg/viewform?pli=1" target="_blank" rel="noopener">
-        <div class="card-no">// 003</div>
+        <div class="card-no">// 004</div>
         <div class="card-title">AI自主監査</div>
         <div class="card-meta">
           <span class="card-domain">docs.google.com/forms</span>
@@ -944,7 +960,7 @@
         </div>
       </a>
       <a class="card" href="https://drive.google.com/drive/folders/1dqvQCPDO1c80JcANkoQDt2HXKeQOYUjd?usp=drive_link" target="_blank" rel="noopener">
-        <div class="card-no">// 004</div>
+        <div class="card-no">// 005</div>
         <div class="card-title">Instagram投稿前チェックアップ先</div>
         <div class="card-meta">
           <span class="card-domain">drive.google.com</span>
@@ -954,6 +970,7 @@
     </div>
   </section>
 
+  <!-- CALENDAR (ディープグリーン) -->
   <section id="calendar" class="flavor" data-color="calendar">
     <div class="flavor-header">
       <div class="flavor-header-inner">
@@ -982,6 +999,7 @@
     </div>
   </section>
 
+  <!-- TOOL (ホワイト) -->
   <section id="tool" class="flavor" data-color="white">
     <div class="flavor-header">
       <div class="flavor-header-inner">
@@ -1018,12 +1036,13 @@
     </div>
   </section>
 
+  <!-- BASE PORTAL (スチールブルー) -->
   <section id="base-portal" class="flavor" data-color="base-portal">
     <div class="flavor-header">
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 08</span>
         <span class="flavor-name">BASE <span class="hl">PORTAL</span></span>
-        <span class="flavor-tag">1 SHOT</span>
+        <span class="flavor-tag">2 SHOTS</span>
       </div>
     </div>
     <div class="grid">
@@ -1032,6 +1051,14 @@
         <div class="card-title">FUJI PORTAL</div>
         <div class="card-meta">
           <span class="card-domain">fuji-portal.pages.dev</span>
+          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
+        </div>
+      </a>
+      <a class="card" href="https://mishimapoatal.suzukitaka.workers.dev/" target="_blank" rel="noopener">
+        <div class="card-no">// 002</div>
+        <div class="card-title">MISHIMA PORTAL</div>
+        <div class="card-meta">
+          <span class="card-domain">mishimapoatal.suzukitaka.workers.dev</span>
           <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
         </div>
       </a>
