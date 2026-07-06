@@ -669,102 +669,6 @@
 
   /* スクロール時の余白(固定ヘッダー対策で各セクションへジャンプした際の上余白) */
   .flavor { scroll-margin-top: 30px; }
-  /* ===== NEWS TICKER ===== */
-  .ticker-wrap {
-    position: sticky;
-    top: 0;
-    z-index: 90;
-    display: flex;
-    align-items: stretch;
-    background: var(--white);
-    border-bottom: 2px solid var(--orange);
-    height: 64px;
-    overflow: hidden;
-  }
-  .ticker-label {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0 20px;
-    background: var(--orange);
-    color: #fff;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 3px;
-    white-space: nowrap;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
-    padding-right: 28px;
-  }
-  .ticker-label-icon { font-size: 20px; }
-  .ticker-track-wrap {
-    flex: 1;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-  }
-  .ticker-track {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    white-space: nowrap;
-    /* JS側でanimationを動的に設定する */
-    will-change: transform;
-  }
-  .ticker-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 32px;
-    cursor: pointer;
-    transition: color 0.15s;
-    text-decoration: none;
-    color: var(--text, #0a0a0a);
-  }
-  .ticker-item:hover { color: var(--orange); }
-  .ticker-cat {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--orange);
-    background: rgba(255, 106, 0, 0.12);
-    padding: 3px 10px;
-    flex-shrink: 0;
-  }
-  .ticker-title {
-    font-family: 'Oswald', 'Noto Sans JP', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    color: inherit;
-  }
-  .ticker-source {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: var(--gray);
-    flex-shrink: 0;
-  }
-  .ticker-sep {
-    color: var(--orange);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    padding: 0 8px;
-    opacity: 0.5;
-  }
-  .ticker-loading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 3px;
-    color: var(--gray);
-    padding: 0 24px;
-    animation: loadingPulse 1.2s infinite;
-  }
-  @keyframes loadingPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-  @keyframes tickerScroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
 
 </style>
 </head>
@@ -859,18 +763,6 @@
 
   </div>
 </section>
-
-<!-- ===== NEWS TICKER ===== -->
-<div class="ticker-wrap" id="tickerWrap">
-  <div class="ticker-label">
-    <span class="ticker-label-icon">⚡</span>NEWS
-  </div>
-  <div class="ticker-track-wrap">
-    <div class="ticker-track" id="tickerTrack">
-      <span class="ticker-loading">// LOADING NEWS FEED...</span>
-    </div>
-  </div>
-</div>
 
 <!-- ===== MAIN ===== -->
 <div class="container">
@@ -1201,54 +1093,6 @@
       }
     }
   });
-
-  // ===== NEWS TICKER =====
-  // Cloudflare WorkersのプロキシからニュースをJSONで取得してティッカー表示
-  // WorkerのURLは実際のドメインに合わせて変更する
-  const NEWS_PROXY_URL = 'https://news-proxy.serizawamo.workers.dev/';
-
-  async function loadNewsTicker() {
-    const track = document.getElementById('tickerTrack');
-    try {
-      const res = await fetch(NEWS_PROXY_URL);
-      const data = await res.json();
-
-      if (!data.ok || !data.items.length) throw new Error('No items');
-
-      // アイテムのHTML生成
-      // 無限ループに見せるため同じリストを2セット並べる
-      const makeItems = () => data.items.map(item => `
-        <a class="ticker-item" href="${item.link}" target="_blank" rel="noopener">
-          <span class="ticker-cat">${item.category}</span>
-          <span class="ticker-title">${item.title}</span>
-          ${item.source ? `<span class="ticker-source">${item.source}</span>` : ''}
-        </a>
-        <span class="ticker-sep">//</span>
-      `).join('');
-
-      // 2セット並べてシームレスなループを実現
-      track.innerHTML = makeItems() + makeItems();
-
-      // 1セット分の幅を測定してアニメーション速度を計算
-      // 幅(px) ÷ 80 = 秒数 (80px/秒のスクロール速度)
-      const fullWidth = track.scrollWidth / 2;
-      const duration = fullWidth / 80;
-      track.style.animation = `tickerScroll ${duration}s linear infinite`;
-
-      // ホバーで一時停止
-      const wrap = document.getElementById('tickerWrap');
-      wrap.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
-      wrap.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
-
-    } catch (e) {
-      track.innerHTML = '<span class="ticker-loading">// NEWS FEED UNAVAILABLE</span>';
-      console.warn('[News] Failed to load:', e);
-    }
-  }
-
-  // ページ読み込み後にニュース取得開始
-  window.addEventListener('load', loadNewsTicker);
-
 
   // HTTPS環境(Vercel)でのみ動作。ローカルのfile://では登録されない。
   if ('serviceWorker' in navigator) {
