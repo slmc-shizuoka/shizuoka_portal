@@ -616,6 +616,39 @@
     line-height: 1.8;
   }
 
+  /* メニュー内検索 */
+  .menu-search-wrap { position: relative; margin-bottom: 6px; }
+  .menu-search-input {
+    width: 100%;
+    padding: 12px 40px 12px 14px;
+    background: var(--black-card);
+    border: 2px solid #dcdcdc;
+    color: var(--white);
+    font-family: 'Oswald', 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .menu-search-input::placeholder { color: var(--gray); }
+  .menu-search-input:focus { border-color: var(--orange); }
+  .menu-search-icon {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--orange);
+    font-size: 18px;
+    pointer-events: none;
+  }
+  .menu-search-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gray);
+    padding: 2px;
+    min-height: 18px;
+  }
+
   /* 背景オーバーレイ: メニュー開時の暗幕 */
   .menu-overlay {
     position: fixed;
@@ -636,6 +669,103 @@
 
   /* スクロール時の余白(固定ヘッダー対策で各セクションへジャンプした際の上余白) */
   .flavor { scroll-margin-top: 30px; }
+  /* ===== NEWS TICKER ===== */
+  .ticker-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    display: flex;
+    align-items: stretch;
+    background: var(--white);
+    border-bottom: 2px solid var(--orange);
+    height: 64px;
+    overflow: hidden;
+  }
+  .ticker-label {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 20px;
+    background: var(--orange);
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    padding-right: 28px;
+  }
+  .ticker-label-icon { font-size: 20px; }
+  .ticker-track-wrap {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    /* JS側でanimationを動的に設定する */
+    will-change: transform;
+  }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 32px;
+    cursor: pointer;
+    transition: color 0.15s;
+    text-decoration: none;
+    color: var(--text, #0a0a0a);
+  }
+  .ticker-item:hover { color: var(--orange); }
+  .ticker-cat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--orange);
+    background: rgba(255, 106, 0, 0.12);
+    padding: 3px 10px;
+    flex-shrink: 0;
+  }
+  .ticker-title {
+    font-family: 'Oswald', 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: inherit;
+  }
+  .ticker-source {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--gray);
+    flex-shrink: 0;
+  }
+  .ticker-sep {
+    color: var(--orange);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    padding: 0 8px;
+    opacity: 0.5;
+  }
+  .ticker-loading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--gray);
+    padding: 0 24px;
+    animation: loadingPulse 1.2s infinite;
+  }
+  @keyframes loadingPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes tickerScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
 </style>
 </head>
 <body>
@@ -650,46 +780,37 @@
 <div class="menu-overlay" id="menuOverlay"></div>
 
 <aside class="menu-panel" id="menuPanel" aria-label="ナビゲーション">
-  <div class="menu-label">// QUICK JUMP</div>
+  <div class="menu-label">// SEARCH</div>
+  <div class="menu-search-wrap">
+    <input type="text" class="menu-search-input" id="searchInput" placeholder="リンクを検索..." autocomplete="off">
+    <span class="menu-search-icon">⌕</span>
+  </div>
+  <div class="menu-search-count" id="searchCount"></div>
+
+  <div class="menu-label" style="margin-top:24px;">// QUICK JUMP</div>
   <a class="menu-jump" data-target="master" href="#master">
-    <span class="menu-jump-no">01</span>
-    <span>MASTER</span>
-    <span class="menu-jump-arrow">▸▸</span>
-  </a>
-  <a class="menu-jump" data-target="learning" href="#learning">
-    <span class="menu-jump-no">02</span>
-    <span>LEARNING</span>
-    <span class="menu-jump-arrow">▸▸</span>
-  </a>
-  <a class="menu-jump" data-target="labor" href="#labor">
-    <span class="menu-jump-no">03</span>
-    <span>LABOR</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">01</span><span>MASTER</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="fas" href="#fas">
-    <span class="menu-jump-no">04</span>
-    <span>FAS</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">02</span><span>FAS</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="shortcut" href="#shortcut">
-    <span class="menu-jump-no">05</span>
-    <span>SHORTCUT</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">03</span><span>SHORTCUT</span><span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="learning" href="#learning">
+    <span class="menu-jump-no">04</span><span>LEARNING</span><span class="menu-jump-arrow">▸▸</span>
+  </a>
+  <a class="menu-jump" data-target="labor" href="#labor">
+    <span class="menu-jump-no">05</span><span>LABOR</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="calendar" href="#calendar">
-    <span class="menu-jump-no">06</span>
-    <span>CALENDAR</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">06</span><span>CALENDAR</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="tool" href="#tool">
-    <span class="menu-jump-no">07</span>
-    <span>TOOL</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">07</span><span>TOOL</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="base-portal" href="#base-portal">
-    <span class="menu-jump-no">08</span>
-    <span>BASE PORTAL</span>
-    <span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">08</span><span>BASE PORTAL</span><span class="menu-jump-arrow">▸▸</span>
   </a>
 
   <div class="menu-label" style="margin-top: 32px;">// ACTIONS</div>
@@ -730,7 +851,7 @@
     </div>
 
     <div class="stickers">
-      <div class="sticker orange"><span>★ 26 LINKS LOADED</span></div>
+      <div class="sticker orange"><span>★ 25 LINKS LOADED</span></div>
       <div class="sticker green"><span>⚡ 8 CATEGORIES</span></div>
       <div class="sticker white"><span>EXTREME FOCUS — 0 SUGAR</span></div>
       <div class="sticker orange"><span>FOR OPERATORS ONLY</span></div>
@@ -739,20 +860,23 @@
   </div>
 </section>
 
+<!-- ===== NEWS TICKER ===== -->
+<div class="ticker-wrap" id="tickerWrap">
+  <div class="ticker-label">
+    <span class="ticker-label-icon">⚡</span>NEWS
+  </div>
+  <div class="ticker-track-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-loading">// LOADING NEWS FEED...</span>
+    </div>
+  </div>
+</div>
+
 <!-- ===== MAIN ===== -->
 <div class="container">
 
   <!-- 検索 -->
-  <div class="search-wrap">
-    <div class="search-label">// SEARCH ENGINE — TYPE TO FILTER</div>
-    <div class="search-box">
-      <div class="search-box-inner">
-        <span class="search-icon">⌕</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="リンクを検索 / SEARCH..." autocomplete="off">
-      </div>
-    </div>
-  </div>
-
+  <!-- MASTER (オレンジ) -->
   <!-- MASTER (オレンジ) -->
   <section id="master" class="flavor" data-color="orange">
     <div class="flavor-header">
@@ -766,100 +890,17 @@
       <a class="card" href="https://drive.google.com/drive/u/0/folders/16W_awpa2EqjdFFCH9Hlq2MbrekfAUqiU" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">静岡Branch</div>
-        <div class="card-meta">
-          <span class="card-domain">drive.google.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">drive.google.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://drive.google.com/drive/u/0/folders/1P6zOzKkE16aCZRNPgrtzOGFzkl1lH51c" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
         <div class="card-title">SL三島BASE</div>
-        <div class="card-meta">
-          <span class="card-domain">drive.google.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">drive.google.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://drive.google.com/drive/u/0/folders/1KuaI9NfyjK6caRx4R5NgSIsxf7Q_DeXM" target="_blank" rel="noopener">
         <div class="card-no">// 003</div>
         <div class="card-title">SL富士BASE</div>
-        <div class="card-meta">
-          <span class="card-domain">drive.google.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- LEARNING (グリーン) -->
-  <section id="learning" class="flavor" data-color="green">
-    <div class="flavor-header">
-      <div class="flavor-header-inner">
-        <span class="flavor-sku">FLAVOR // 02</span>
-        <span class="flavor-name">LE<span class="hl">ARNING</span></span>
-        <span class="flavor-tag">3 SHOTS</span>
-      </div>
-    </div>
-    <div class="grid">
-      <a class="card" href="https://learning-portal.serizawamo.workers.dev/" target="_blank" rel="noopener">
-        <div class="card-no">// 001</div>
-        <div class="card-title">LearningPortal</div>
-        <div class="card-meta">
-          <span class="card-domain">learning-portal.serizawamo.workers.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://au-portal.my.site.com/lms" target="_blank" rel="noopener">
-        <div class="card-no">// 002</div>
-        <div class="card-title">ラースタ (au)</div>
-        <div class="card-meta">
-          <span class="card-domain">au-portal.my.site.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://c-tra.itc.softbank.jp/login" target="_blank" rel="noopener">
-        <div class="card-no">// 003</div>
-        <div class="card-title">クルトレ (Softbank)</div>
-        <div class="card-meta">
-          <span class="card-domain">c-tra.itc.softbank.jp</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- LABOR (バーントオレンジ) -->
-  <section id="labor" class="flavor" data-color="burnt">
-    <div class="flavor-header">
-      <div class="flavor-header-inner">
-        <span class="flavor-sku">FLAVOR // 03</span>
-        <span class="flavor-name">LA<span class="hl">BOR</span></span>
-        <span class="flavor-tag">3 SHOTS</span>
-      </div>
-    </div>
-    <div class="grid">
-      <a class="card" href="https://id.jobcan.jp/users/sign_in" target="_blank" rel="noopener">
-        <div class="card-no">// 001</div>
-        <div class="card-title">ジョブカン</div>
-        <div class="card-meta">
-          <span class="card-domain">id.jobcan.jp</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://app.smarthr.jp/login" target="_blank" rel="noopener">
-        <div class="card-no">// 002</div>
-        <div class="card-title">SmartHR</div>
-        <div class="card-meta">
-          <span class="card-domain">app.smarthr.jp</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://service.kaonavi.jp/login" target="_blank" rel="noopener">
-        <div class="card-no">// 003</div>
-        <div class="card-title">カオナビ</div>
-        <div class="card-meta">
-          <span class="card-domain">service.kaonavi.jp</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">drive.google.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -868,7 +909,7 @@
   <section id="fas" class="flavor" data-color="fas">
     <div class="flavor-header">
       <div class="flavor-header-inner">
-        <span class="flavor-sku">FLAVOR // 04</span>
+        <span class="flavor-sku">FLAVOR // 02</span>
         <span class="flavor-name">F<span class="hl">AS</span></span>
         <span class="flavor-tag">5 SHOTS</span>
       </div>
@@ -877,42 +918,27 @@
       <a class="card" href="https://docs.google.com/spreadsheets/d/1yepzlfQn24PBVvRDQyIrRE5RN9fRhKZc/edit?usp=drive_link&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">FAS機会損失相談 (三島用)</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/sheets</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://docs.google.com/spreadsheets/d/1ChQIBW0PrB7fmEMbKpX8TFhSsn4sHHBE/edit?usp=sharing&ouid=105070422042537613200&rtpof=true&sd=true" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
         <div class="card-title">FAS機会損失相談 (富士用)</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/sheets</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://docs.google.com/spreadsheets/d/1E6xetCHG_9H4DxVEdijlTh4IGAtbB2oH/edit?gid=1672579620#gid=1672579620" target="_blank" rel="noopener">
         <div class="card-no">// 003</div>
         <div class="card-title">リファラルリスト</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/sheets</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://docs.google.com/spreadsheets/d/1aDr5OjTrRNGukMQ-Ozyqz2rE2TAOyjMczrrwzdGaYBM/edit?usp=drive_link" target="_blank" rel="noopener">
         <div class="card-no">// 004</div>
         <div class="card-title">SeatBox型アカデミアモデル要件</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/sheets</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/sheets</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
-      <a class="card" href="https://fuji-base-ledger.pages.dev/" target="_blank" rel="noopener">
+      <a class="card" href="https://seatbox.serizawamo.workers.dev/" target="_blank" rel="noopener">
         <div class="card-no">// 005</div>
-        <div class="card-title">静岡地域会員台帳</div>
-        <div class="card-meta">
-          <span class="card-domain">fuji-base-ledger.pages.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-title">SeatBox枠申請</div>
+        <div class="card-meta"><span class="card-domain">seatbox.serizawamo.workers.dev</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -921,7 +947,7 @@
   <section id="shortcut" class="flavor" data-color="acid">
     <div class="flavor-header">
       <div class="flavor-header-inner">
-        <span class="flavor-sku">FLAVOR // 05</span>
+        <span class="flavor-sku">FLAVOR // 03</span>
         <span class="flavor-name">SHORT<span class="hl">CUT</span></span>
         <span class="flavor-tag">5 SHOTS</span>
       </div>
@@ -930,42 +956,83 @@
       <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSe8eYu8jZJs3goSR2nxmx5PVyHkF7RmsjUIn9jLpug17cIcIg/viewform" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">日次報告</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/forms</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/forms</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSenBW-onLxEWRkDIb5AskY44HSc3QDAUAyKFRgbit3w_W2Oig/viewform?usp=header" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
         <div class="card-title">会議参加申請</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/forms</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/forms</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://meet.google.com/vgq-xrnv-hkw" target="_blank" rel="noopener">
         <div class="card-no">// 003</div>
         <div class="card-title">GoogleMeet (静岡Branch専用)</div>
-        <div class="card-meta">
-          <span class="card-domain">meet.google.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">meet.google.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLScWWxWfHAjY-hJI6oX_OOUMM9TM0FDnjSW84IwLPa0F3i4yJg/viewform?pli=1" target="_blank" rel="noopener">
         <div class="card-no">// 004</div>
         <div class="card-title">AI自主監査</div>
-        <div class="card-meta">
-          <span class="card-domain">docs.google.com/forms</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/forms</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://drive.google.com/drive/folders/1dqvQCPDO1c80JcANkoQDt2HXKeQOYUjd?usp=drive_link" target="_blank" rel="noopener">
         <div class="card-no">// 005</div>
         <div class="card-title">Instagram投稿前チェックアップ先</div>
-        <div class="card-meta">
-          <span class="card-domain">drive.google.com</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">drive.google.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- LEARNING (グリーン) -->
+  <section id="learning" class="flavor" data-color="green">
+    <div class="flavor-header">
+      <div class="flavor-header-inner">
+        <span class="flavor-sku">FLAVOR // 04</span>
+        <span class="flavor-name">LE<span class="hl">ARNING</span></span>
+        <span class="flavor-tag">3 SHOTS</span>
+      </div>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://learning-portal.serizawamo.workers.dev/" target="_blank" rel="noopener">
+        <div class="card-no">// 001</div>
+        <div class="card-title">LearningPortal</div>
+        <div class="card-meta"><span class="card-domain">learning-portal.serizawamo.workers.dev</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+      <a class="card" href="https://au-portal.my.site.com/lms" target="_blank" rel="noopener">
+        <div class="card-no">// 002</div>
+        <div class="card-title">ラースタ (au)</div>
+        <div class="card-meta"><span class="card-domain">au-portal.my.site.com</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+      <a class="card" href="https://c-tra.itc.softbank.jp/login" target="_blank" rel="noopener">
+        <div class="card-no">// 003</div>
+        <div class="card-title">クルトレ (Softbank)</div>
+        <div class="card-meta"><span class="card-domain">c-tra.itc.softbank.jp</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- LABOR (バーントオレンジ) -->
+  <section id="labor" class="flavor" data-color="burnt">
+    <div class="flavor-header">
+      <div class="flavor-header-inner">
+        <span class="flavor-sku">FLAVOR // 05</span>
+        <span class="flavor-name">LA<span class="hl">BOR</span></span>
+        <span class="flavor-tag">3 SHOTS</span>
+      </div>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://id.jobcan.jp/users/sign_in" target="_blank" rel="noopener">
+        <div class="card-no">// 001</div>
+        <div class="card-title">ジョブカン</div>
+        <div class="card-meta"><span class="card-domain">id.jobcan.jp</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+      <a class="card" href="https://app.smarthr.jp/login" target="_blank" rel="noopener">
+        <div class="card-no">// 002</div>
+        <div class="card-title">SmartHR</div>
+        <div class="card-meta"><span class="card-domain">app.smarthr.jp</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+      <a class="card" href="https://service.kaonavi.jp/login" target="_blank" rel="noopener">
+        <div class="card-no">// 003</div>
+        <div class="card-title">カオナビ</div>
+        <div class="card-meta"><span class="card-domain">service.kaonavi.jp</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -983,18 +1050,12 @@
       <a class="card" href="https://slmc-mishima.studio.site/#calendar" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">イベントカレンダー (三島用)</div>
-        <div class="card-meta">
-          <span class="card-domain">slmc-mishima.studio.site</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">slmc-mishima.studio.site</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://smartlife-fuji.studio.site/#calendar" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
         <div class="card-title">イベントカレンダー (富士用)</div>
-        <div class="card-meta">
-          <span class="card-domain">smartlife-fuji.studio.site</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">smartlife-fuji.studio.site</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -1005,33 +1066,19 @@
       <div class="flavor-header-inner">
         <span class="flavor-sku">FLAVOR // 07</span>
         <span class="flavor-name">TO<span class="hl">OL</span></span>
-        <span class="flavor-tag">3 SHOTS</span>
+        <span class="flavor-tag">2 SHOTS</span>
       </div>
     </div>
     <div class="grid">
       <a class="card" href="https://presence-app-eight.vercel.app/dashboard/board" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">Presence</div>
-        <div class="card-meta">
-          <span class="card-domain">presence-app-eight.vercel.app</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
-      </a>
-      <a class="card" href="https://pickup.serizawamo.workers.dev/" target="_blank" rel="noopener">
-        <div class="card-no">// 002</div>
-        <div class="card-title">STORE/PICKER</div>
-        <div class="card-meta">
-          <span class="card-domain">pickup.serizawamo.workers.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">presence-app-eight.vercel.app</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://emergency-card.serizawamo.workers.dev/" target="_blank" rel="noopener">
-        <div class="card-no">// 003</div>
+        <div class="card-no">// 002</div>
         <div class="card-title">緊急カード作成</div>
-        <div class="card-meta">
-          <span class="card-domain">emergency-card.serizawamo.workers.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">emergency-card.serizawamo.workers.dev</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -1049,18 +1096,12 @@
       <a class="card" href="https://fuji-portal.pages.dev/" target="_blank" rel="noopener">
         <div class="card-no">// 001</div>
         <div class="card-title">FUJI PORTAL</div>
-        <div class="card-meta">
-          <span class="card-domain">fuji-portal.pages.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">fuji-portal.pages.dev</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
       <a class="card" href="https://mishimapoatal.suzukitaka.workers.dev/" target="_blank" rel="noopener">
         <div class="card-no">// 002</div>
         <div class="card-title">MISHIMA PORTAL</div>
-        <div class="card-meta">
-          <span class="card-domain">mishimapoatal.suzukitaka.workers.dev</span>
-          <span class="card-go">OPEN <span class="arrow">▸▸</span></span>
-        </div>
+        <div class="card-meta"><span class="card-domain">mishimapoatal.suzukitaka.workers.dev</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
       </a>
     </div>
   </section>
@@ -1093,6 +1134,9 @@
       f.style.display = visible.length > 0 ? '' : 'none';
     });
     noResult.classList.toggle('show', hit === 0 && q !== '');
+    // メニュー内カウント表示
+    const countEl = document.getElementById('searchCount');
+    if (countEl) countEl.textContent = q ? `// ${hit} LINKS FOUND` : '';
   }
   searchInput.addEventListener('input', e => applyFilter(e.target.value.toLowerCase().trim()));
 
@@ -1158,7 +1202,54 @@
     }
   });
 
-  // ===== Service Worker 登録 =====
+  // ===== NEWS TICKER =====
+  // Cloudflare WorkersのプロキシからニュースをJSONで取得してティッカー表示
+  // WorkerのURLは実際のドメインに合わせて変更する
+  const NEWS_PROXY_URL = 'https://news-proxy.serizawamo.workers.dev/';
+
+  async function loadNewsTicker() {
+    const track = document.getElementById('tickerTrack');
+    try {
+      const res = await fetch(NEWS_PROXY_URL);
+      const data = await res.json();
+
+      if (!data.ok || !data.items.length) throw new Error('No items');
+
+      // アイテムのHTML生成
+      // 無限ループに見せるため同じリストを2セット並べる
+      const makeItems = () => data.items.map(item => `
+        <a class="ticker-item" href="${item.link}" target="_blank" rel="noopener">
+          <span class="ticker-cat">${item.category}</span>
+          <span class="ticker-title">${item.title}</span>
+          ${item.source ? `<span class="ticker-source">${item.source}</span>` : ''}
+        </a>
+        <span class="ticker-sep">//</span>
+      `).join('');
+
+      // 2セット並べてシームレスなループを実現
+      track.innerHTML = makeItems() + makeItems();
+
+      // 1セット分の幅を測定してアニメーション速度を計算
+      // 幅(px) ÷ 80 = 秒数 (80px/秒のスクロール速度)
+      const fullWidth = track.scrollWidth / 2;
+      const duration = fullWidth / 80;
+      track.style.animation = `tickerScroll ${duration}s linear infinite`;
+
+      // ホバーで一時停止
+      const wrap = document.getElementById('tickerWrap');
+      wrap.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+      wrap.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+
+    } catch (e) {
+      track.innerHTML = '<span class="ticker-loading">// NEWS FEED UNAVAILABLE</span>';
+      console.warn('[News] Failed to load:', e);
+    }
+  }
+
+  // ページ読み込み後にニュース取得開始
+  window.addEventListener('load', loadNewsTicker);
+
+
   // HTTPS環境(Vercel)でのみ動作。ローカルのfile://では登録されない。
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
