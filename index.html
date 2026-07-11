@@ -780,6 +780,13 @@
     line-height: 1.6;
     white-space: pre-wrap;
   }
+  .board-link {
+    color: var(--orange);
+    text-decoration: underline;
+    word-break: break-all;
+    transition: color 0.15s;
+  }
+  .board-link:hover { color: var(--orange-burnt, #cc4400); }
   .board-empty {
     padding: 24px 20px;
     font-family: 'Bebas Neue', sans-serif;
@@ -1267,7 +1274,13 @@
   // 4. 発行されたURLを下記 SHEET_CSV_URL に貼り付け
   const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfWR4IwrSIM7H1nL-wGAXB4-udlkQy6niY7gesYUgiKuern4MCrm76cF8yeiNiTBKIMuGKhAkYxo27/pub?output=csv';
 
-  async function loadBoard() {
+  // URL文字列をクリック可能なリンクに変換するヘルパー
+  function linkify(text) {
+    return text.replace(
+      /(https?:\/\/[^\s\u3000、。！？「」『』【】〔〕〈〉《》]+)/g,
+      '<a href="$1" target="_blank" rel="noopener" class="board-link">$1</a>'
+    );
+  }
     const list = document.getElementById('boardList');
     const countEl = document.getElementById('boardCount');
     const updatedEl = document.getElementById('boardUpdated');
@@ -1302,7 +1315,7 @@
           <div class="board-item-date">${date}</div>
           <div class="board-item-body">
             <div class="board-item-title">${title}</div>
-            ${text ? `<div class="board-item-text">${text}</div>` : ''}
+            ${text ? `<div class="board-item-text">${linkify(text)}</div>` : ''}
           </div>
         </div>
       `).join('');
