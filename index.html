@@ -1266,13 +1266,8 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ===== 掲示板(スプレッドシート連携) =====
-  // スプレッドシートの設定手順:
-  // 1. Googleスプレッドシートを新規作成
-  // 2. A列:日付, B列:タイトル, C列:本文 の形式で入力(1行目はヘッダー行)
-  // 3. 「ファイル」→「共有」→「ウェブに公開」→「CSV」形式で公開
-  // 4. 発行されたURLを下記 SHEET_CSV_URL に貼り付け
-  const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfWR4IwrSIM7H1nL-wGAXB4-udlkQy6niY7gesYUgiKuern4MCrm76cF8yeiNiTBKIMuGKhAkYxo27/pub?output=csv';
+  // ===== 掲示板(GAS連携) =====
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxfMZ1An-adwT3OIGr_hxlU6ZVBalJllfvTxKOgayki-dc_n-DNjfbStIH88G2f77yRZg/exec';
 
   // URL文字列をクリック可能なリンクに変換するヘルパー
   function linkify(text) {
@@ -1283,55 +1278,22 @@
   }
 
   async function loadBoard() {
-    const list = document.getElementById('boardList');
-    const countEl = document.getElementById('boardCount');
+    const list     = document.getElementById('boardList');
+    const countEl  = document.getElementById('boardCount');
     const updatedEl = document.getElementById('boardUpdated');
-
-    if (SHEET_CSV_URL === 'YOUR_SHEET_CSV_URL') {
-      list.innerHTML = `<div class="board-error">// スプレッドシートURLを設定してください</div>`;
-      return;
-    }
-
-    // 複数のCORSプロキシを順番に試す
-    const proxies = [
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(SHEET_CSV_URL)}`,
-      `https://corsproxy.io/?${encodeURIComponent(SHEET_CSV_URL)}`,
-      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(SHEET_CSV_URL)}`,
-    ];
-
-    let csv = null;
-    for (const url of proxies) {
-      try {
-        const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
-        if (res.ok) {
-          csv = await res.text();
-          if (csv && csv.length > 10) break; // 取得成功
-        }
-      } catch { continue; }
-    }
-
     try {
-      if (!csv) throw new Error('All proxies failed');
-
-      const rows = csv.trim().split('\n').slice(1) // 1行目(ヘッダー)をスキップ
-        .map(row => {
-          // CSVをパース(カンマ区切り、ダブルクォート対応)
-          const cols = row.match(/(".*?"|[^",\n]+)(?=,|$)/g) || [];
-          return cols.map(c => c.replace(/^"|"$/g, '').trim());
-        })
-        .filter(r => r[0] && r[1]) // 日付とタイトルが空でない行のみ
-        .reverse(); // 新しい順に並べる
-
-      if (!rows.length) {
+      const res  = await fetch(GAS_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data.ok || !data.items.length) {
         list.innerHTML = `<div class="board-empty">// お知らせはありません</div>`;
         return;
       }
-
-      countEl.textContent = `${rows.length} ITEMS`;
+      const rows = [...data.items].reverse();
+      countEl.textContent  = `${rows.length} ITEMS`;
       const now = new Date();
       updatedEl.textContent = `// UPDATED ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-      list.innerHTML = rows.map(([date, title, text]) => `
+      list.innerHTML = rows.map(({ date, title, text }) => `
         <div class="board-item">
           <div class="board-item-date">${date}</div>
           <div class="board-item-body">
@@ -1340,14 +1302,13 @@
           </div>
         </div>
       `).join('');
-
-    } catch {
-      list.innerHTML = `<div class="board-error">// 掲示板の読み込みに失敗しました</div>`;
+    } catch(e) {
+      list.innerHTML = `<div class="board-error">// 掲示板の読み込みに失敗しました (${e.message})</div>`;
     }
   }
   loadBoard();
-  // 5分ごとに自動更新
   setInterval(loadBoard, 5 * 60 * 1000);
+
 
   // HTTPS環境(Vercel)でのみ動作。ローカルのfile://では登録されない。
   if ('serviceWorker' in navigator) {
