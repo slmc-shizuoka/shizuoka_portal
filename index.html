@@ -1289,13 +1289,23 @@
         list.innerHTML = `<div class="board-empty">// お知らせはありません</div>`;
         return;
       }
+
+      // 日付を整形: "Sun Jul 12 2026 00:00:00 GMT+0900" → "7/12"
+      function formatDate(str) {
+        const d = new Date(str);
+        if (!isNaN(d.getTime())) {
+          return `${d.getMonth() + 1}/${d.getDate()}`;
+        }
+        return str; // パース失敗時はそのまま返す
+      }
+
       const rows = [...data.items].reverse();
       countEl.textContent  = `${rows.length} ITEMS`;
       const now = new Date();
       updatedEl.textContent = `// UPDATED ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
       list.innerHTML = rows.map(({ date, title, text }) => `
         <div class="board-item">
-          <div class="board-item-date">${date}</div>
+          <div class="board-item-date">${formatDate(date)}</div>
           <div class="board-item-body">
             <div class="board-item-title">${title}</div>
             ${text ? `<div class="board-item-text">${linkify(text)}</div>` : ''}
