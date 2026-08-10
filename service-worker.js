@@ -3,7 +3,7 @@
 // キャッシュ名にバージョンを付けて管理する。
 // 更新時はCACHE_VERSIONの数字を上げるだけでOK。
 // =============================================
-const CACHE_VERSION = 'v7';
+const CACHE_VERSION = 'v8';
 const CACHE_NAME = `shizuoka-portal-${CACHE_VERSION}`;
 
 // インストール時にキャッシュしておくファイル一覧
