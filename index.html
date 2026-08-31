@@ -38,7 +38,7 @@
     --orange-fas: #ff4d00;    /* FAS用: 機会損失=警告色として赤寄りの強オレンジ */
     --green: #00b85a;       /* 白背景で読みやすいよう少し落ち着いた緑に */
     --green-acid: #6ed500;  /* アシッドも視認性確保で彩度を調整 */
-    --green-calendar: #008c5e; /* Calendar用: Learningより深い緑、安定感を出す */
+    --green-keiei: #008c5e; /* 経営指標用: 数値管理を表す深い緑 */
     --teal-seatbox: #0097a7;   /* SeatBox用: 枠管理の整理感を出す青緑 */
     --blue-steel: #1a6fa8;    /* BASE PORTAL用: 拠点ポータルを表す落ち着いた鋼青 */
     --blue-news: #2a7de1;     /* NEWS用: 情報・メディアを表すニュースブルー */
@@ -287,7 +287,7 @@
   .flavor[data-color="acid"] .flavor-header::before { background: var(--green-acid); }
   .flavor[data-color="burnt"] .flavor-header::before { background: var(--orange-burnt); }
   .flavor[data-color="fas"] .flavor-header::before { background: var(--orange-fas); }
-  .flavor[data-color="calendar"] .flavor-header::before { background: var(--green-calendar); }
+  .flavor[data-color="keiei"] .flavor-header::before { background: var(--green-keiei); }
   .flavor[data-color="seatbox"] .flavor-header::before { background: var(--teal-seatbox); }
   .flavor[data-color="base-portal"] .flavor-header::before { background: var(--blue-steel); }
   .flavor[data-color="news"] .flavor-header::before { background: var(--blue-news); }
@@ -319,7 +319,7 @@
   .flavor[data-color="acid"] .flavor-name .hl { color: var(--green-acid); }
   .flavor[data-color="burnt"] .flavor-name .hl { color: var(--orange-burnt); }
   .flavor[data-color="fas"] .flavor-name .hl { color: var(--orange-fas); }
-  .flavor[data-color="calendar"] .flavor-name .hl { color: var(--green-calendar); }
+  .flavor[data-color="keiei"] .flavor-name .hl { color: var(--green-keiei); }
   .flavor[data-color="seatbox"] .flavor-name .hl { color: var(--teal-seatbox); }
   .flavor[data-color="base-portal"] .flavor-name .hl { color: var(--blue-steel); }
   .flavor[data-color="news"] .flavor-name .hl { color: var(--blue-news); }
@@ -367,7 +367,7 @@
   .flavor[data-color="acid"] .card::before { background: var(--green-acid); }
   .flavor[data-color="burnt"] .card::before { background: var(--orange-burnt); }
   .flavor[data-color="fas"] .card::before { background: var(--orange-fas); }
-  .flavor[data-color="calendar"] .card::before { background: var(--green-calendar); }
+  .flavor[data-color="keiei"] .card::before { background: var(--green-keiei); }
   .flavor[data-color="seatbox"] .card::before { background: var(--teal-seatbox); }
   .flavor[data-color="base-portal"] .card::before { background: var(--blue-steel); }
   .flavor[data-color="news"] .card::before { background: var(--blue-news); }
@@ -387,7 +387,7 @@
   .flavor[data-color="acid"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-acid) 50%); }
   .flavor[data-color="burnt"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-burnt) 50%); }
   .flavor[data-color="fas"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--orange-fas) 50%); }
-  .flavor[data-color="calendar"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-calendar) 50%); }
+  .flavor[data-color="keiei"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--green-keiei) 50%); }
   .flavor[data-color="seatbox"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--teal-seatbox) 50%); }
   .flavor[data-color="base-portal"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--blue-steel) 50%); }
   .flavor[data-color="news"] .card::after { background: linear-gradient(135deg, transparent 50%, var(--blue-news) 50%); }
@@ -400,7 +400,7 @@
   .flavor[data-color="acid"] .card:hover  { border-color: var(--green-acid); }
   .flavor[data-color="burnt"] .card:hover { border-color: var(--orange-burnt); }
   .flavor[data-color="fas"] .card:hover { border-color: var(--orange-fas); }
-  .flavor[data-color="calendar"] .card:hover { border-color: var(--green-calendar); }
+  .flavor[data-color="keiei"] .card:hover { border-color: var(--green-keiei); }
   .flavor[data-color="seatbox"] .card:hover { border-color: var(--teal-seatbox); }
   .flavor[data-color="base-portal"] .card:hover { border-color: var(--blue-steel); }
   .flavor[data-color="news"] .card:hover { border-color: var(--blue-news); }
@@ -446,7 +446,7 @@
   .flavor[data-color="acid"] .card-go  { color: var(--green-acid); }
   .flavor[data-color="burnt"] .card-go { color: var(--orange-burnt); }
   .flavor[data-color="fas"] .card-go { color: var(--orange-fas); }
-  .flavor[data-color="calendar"] .card-go { color: var(--green-calendar); }
+  .flavor[data-color="keiei"] .card-go { color: var(--green-keiei); }
   .flavor[data-color="seatbox"] .card-go { color: var(--teal-seatbox); }
   .flavor[data-color="base-portal"] .card-go { color: var(--blue-steel); }
   .flavor[data-color="news"] .card-go { color: var(--blue-news); }
@@ -614,7 +614,7 @@
   .menu-jump[data-target="learning"]:hover { background: var(--green); border-color: var(--green); }
   .menu-jump[data-target="labor"]:hover { background: var(--orange-burnt); border-color: var(--orange-burnt); }
   .menu-jump[data-target="fas"]:hover { background: var(--orange-fas); border-color: var(--orange-fas); }
-  .menu-jump[data-target="calendar"]:hover { background: var(--green-calendar); border-color: var(--green-calendar); }
+  .menu-jump[data-target="keiei"]:hover { background: var(--green-keiei); border-color: var(--green-keiei); }
   .menu-jump[data-target="seatbox"]:hover { background: var(--teal-seatbox); border-color: var(--teal-seatbox); }
   .menu-jump[data-target="base-portal"]:hover { background: var(--blue-steel); border-color: var(--blue-steel); }
   .menu-jump[data-target="news"]:hover { background: var(--blue-news); border-color: var(--blue-news); }
@@ -846,26 +846,29 @@
   <a class="menu-jump" data-target="fas" href="#fas">
     <span class="menu-jump-no">02</span><span>FAS</span><span class="menu-jump-arrow">▸▸</span>
   </a>
+  <a class="menu-jump" data-target="keiei" href="#keiei">
+    <span class="menu-jump-no">03</span><span>KEIEI</span><span class="menu-jump-arrow">▸▸</span>
+  </a>
   <a class="menu-jump" data-target="seatbox" href="#seatbox">
-    <span class="menu-jump-no">03</span><span>SEATBOX</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">04</span><span>SEATBOX</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="shortcut" href="#shortcut">
-    <span class="menu-jump-no">04</span><span>SHORTCUT</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">05</span><span>SHORTCUT</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="labor" href="#labor">
-    <span class="menu-jump-no">05</span><span>LABOR</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">06</span><span>LABOR</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="news" href="#news">
-    <span class="menu-jump-no">06</span><span>NEWS</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">07</span><span>NEWS</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="learning" href="#learning">
-    <span class="menu-jump-no">07</span><span>LEARNING</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">08</span><span>LEARNING</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="tool" href="#tool">
-    <span class="menu-jump-no">08</span><span>TOOL</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">09</span><span>TOOL</span><span class="menu-jump-arrow">▸▸</span>
   </a>
   <a class="menu-jump" data-target="base-portal" href="#base-portal">
-    <span class="menu-jump-no">09</span><span>BASE PORTAL</span><span class="menu-jump-arrow">▸▸</span>
+    <span class="menu-jump-no">10</span><span>BASE PORTAL</span><span class="menu-jump-arrow">▸▸</span>
   </a>
 
   <div class="menu-label" style="margin-top: 32px;">// ACTIONS</div>
@@ -917,8 +920,8 @@
     </div>
 
     <div class="stickers">
-      <div class="sticker orange"><span>★ 38 LINKS LOADED</span></div>
-      <div class="sticker green"><span>⚡ 9 CATEGORIES</span></div>
+      <div class="sticker orange"><span>★ 39 LINKS LOADED</span></div>
+      <div class="sticker green"><span>⚡ 10 CATEGORIES</span></div>
       <div class="sticker white"><span>EXTREME FOCUS — 0 SUGAR</span></div>
       <div class="sticker orange"><span>FOR OPERATORS ONLY</span></div>
     </div>
@@ -1002,10 +1005,25 @@
     </div>
   </section>
 
+  <!-- KEIEI (経営指標) -->
+  <section id="keiei" class="flavor" data-color="keiei">
+    <div class="flavor-header"><div class="flavor-header-inner">
+      <span class="flavor-sku">FLAVOR // 03</span>
+      <span class="flavor-name">KEI<span class="hl">EI</span></span>
+      <span class="flavor-tag">1 SHOT</span>
+    </div></div>
+    <div class="grid">
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1mS1-KHCrXg3QrBxaoEp6q9__45w749bj0tDnAXarTGQ/edit?gid=1143880474#gid=1143880474" target="_blank" rel="noopener">
+        <div class="card-no">// 001</div><div class="card-title">静岡地区LTV</div>
+        <div class="card-meta"><span class="card-domain">docs.google.com/sheets</span><span class="card-go">OPEN <span class="arrow">▸▸</span></span></div>
+      </a>
+    </div>
+  </section>
+
   <!-- SEATBOX -->
   <section id="seatbox" class="flavor" data-color="seatbox">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 03</span>
+      <span class="flavor-sku">FLAVOR // 04</span>
       <span class="flavor-name">SEAT<span class="hl">BOX</span></span>
       <span class="flavor-tag">4 SHOTS</span>
     </div></div>
@@ -1032,7 +1050,7 @@
   <!-- SHORTCUT -->
   <section id="shortcut" class="flavor" data-color="acid">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 04</span>
+      <span class="flavor-sku">FLAVOR // 05</span>
       <span class="flavor-name">SHORT<span class="hl">CUT</span></span>
       <span class="flavor-tag">7 SHOTS</span>
     </div></div>
@@ -1071,7 +1089,7 @@
   <!-- LABOR -->
   <section id="labor" class="flavor" data-color="burnt">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 05</span>
+      <span class="flavor-sku">FLAVOR // 06</span>
       <span class="flavor-name">LA<span class="hl">BOR</span></span>
       <span class="flavor-tag">4 SHOTS</span>
     </div></div>
@@ -1098,7 +1116,7 @@
   <!-- NEWS (ニュースブルー) -->
   <section id="news" class="flavor" data-color="news">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 06</span>
+      <span class="flavor-sku">FLAVOR // 07</span>
       <span class="flavor-name">NE<span class="hl">WS</span></span>
       <span class="flavor-tag">6 SHOTS</span>
     </div></div>
@@ -1133,7 +1151,7 @@
   <!-- LEARNING -->
   <section id="learning" class="flavor" data-color="green">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 07</span>
+      <span class="flavor-sku">FLAVOR // 08</span>
       <span class="flavor-name">LE<span class="hl">ARNING</span></span>
       <span class="flavor-tag">3 SHOTS</span>
     </div></div>
@@ -1156,7 +1174,7 @@
   <!-- TOOL -->
   <section id="tool" class="flavor" data-color="white">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 08</span>
+      <span class="flavor-sku">FLAVOR // 09</span>
       <span class="flavor-name">TO<span class="hl">OL</span></span>
       <span class="flavor-tag">3 SHOTS</span>
     </div></div>
@@ -1179,7 +1197,7 @@
   <!-- BASE PORTAL -->
   <section id="base-portal" class="flavor" data-color="base-portal">
     <div class="flavor-header"><div class="flavor-header-inner">
-      <span class="flavor-sku">FLAVOR // 09</span>
+      <span class="flavor-sku">FLAVOR // 10</span>
       <span class="flavor-name">BASE <span class="hl">PORTAL</span></span>
       <span class="flavor-tag">2 SHOTS</span>
     </div></div>
